@@ -1,5 +1,5 @@
 import sys, pygame
-
+import Sound, Track, TrackManager
 
 ressources_dir = "ressources/"
 
@@ -43,7 +43,16 @@ def run():
 	
 	#sound0 = pygame.mixer.Sound("sounds/ambiance_pluie_orage.ogg")
 	#sound0 = pygame.mixer.Sound("sounds/scene_01_music_JS-Bach-Toccata.ogg")
-	sound0 = pygame.mixer.Sound("sounds/thunder.ogg")
+	sound0 = Sound.Sound("sounds/thunder.ogg")
+
+	track0 = Track.Track(sound0)
+	track1 = Track.Track(sound0)
+	track2 = Track.Track(sound0)
+
+	trackManager = TrackManager.TrackManager()
+	trackManager.add(track0)
+	trackManager.add(track1)
+	trackManager.add(track2)
 	
 	while 1:
 	    for event in pygame.event.get():
@@ -55,7 +64,7 @@ def run():
 	        		sys.exit()
 	        	elif event.key == pygame.K_SPACE:
 	        		label = myfont.render("Hello", 0, white)
-	        		sound0.play(fade_ms=5000)
+	        		track0.get_sound().play()
 	
 	    ballrect = ballrect.move(speed)
 	    if ballrect.left < 0 or ballrect.right > width:
@@ -67,6 +76,7 @@ def run():
 	    pygame.draw.rect(screen, darkBlue, (10,20,100,50), 0)
 	    screen.blit(ball, ballrect)
 	    #drawHouse(300,300,100,100,screen, pink)
+	    trackManager.draw(screen)
 	    screen.blit(label, (100, 100))
 	    pygame.display.flip()
 	    pygame.time.delay(500)
