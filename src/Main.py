@@ -1,9 +1,11 @@
 import sys, pygame
-import Sound, Track, Manager, Selection
+import Sound, Track, Manager, Selection, Loader
 
 ressources_dir = "ressources/"
 
-def run():
+
+
+def run(playlist_file):
 	# Init pygame
 	pygame.mixer.pre_init(44100, -16, 2, 2048) # setup mixer to avoid sound lag
 	print "Init pygame, version = ", pygame.version.ver
@@ -40,16 +42,12 @@ def run():
 	
 	myfont = pygame.font.SysFont("monospace", 15)
 	label = myfont.render("Some text!", 1, yellow)
-	
-	#sound0 = pygame.mixer.Sound("sounds/ambiance_pluie_orage.ogg")
-	#sound0 = pygame.mixer.Sound("sounds/scene_01_music_JS-Bach-Toccata.ogg")
-	sound0 = Sound.Sound("sounds/thunder.ogg")
 
-	track0 = Track.Track(sound0)
 
+	# ***
 	manager = Manager.Manager()
-	for i in range(0,5):
-		manager.add(Track.Track(sound0))
+
+	Loader.load_playlist(manager, playlist_file)
 
 	keys = [pygame.K_a, pygame.K_z, pygame.K_e,
 			pygame.K_r, pygame.K_t, 
@@ -79,7 +77,6 @@ def run():
 	        		track0.get_sound().play()
 	        	# select a track
 	        	elif selection.is_selection(event.key):
-	        		print 'select track'
 	        		selection.treat_key(event.key)
 	
 	    ballrect = ballrect.move(speed)
