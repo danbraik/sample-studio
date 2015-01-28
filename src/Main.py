@@ -1,8 +1,9 @@
 import sys, pygame
-import Sound, Track, Manager, Selection, Loader
+import Sound, Track, Manager, Selection, Loader, Color
+import Commands
+
 
 ressources_dir = "ressources/"
-
 
 
 def run(playlist_file):
@@ -25,23 +26,10 @@ def run(playlist_file):
 	pygame.display.set_caption("Ardent'Scene studio")
 	pygame.mouse.set_visible(False)
 	
-	
 	# Init entities
 	ball = pygame.image.load(ressources_dir + "ball.gif")
 	ballrect = ball.get_rect()
-	speed = [2, 2]
-	
-	red = (255,0,0)
-	green = (0,255,0)
-	blue = (0,0,255)
-	darkBlue = (0,0,128)
-	white = (255,255,255)
-	black = (0,0,0)
-	pink = (255,200,200)
-	yellow = (255,255,0)
-	
-	myfont = pygame.font.SysFont("monospace", 15)
-	label = myfont.render("Some text!", 1, yellow)
+	speed = [20, 18]
 
 
 	# ***
@@ -55,6 +43,11 @@ def run(playlist_file):
 			pygame.K_o, pygame.K_p]
 	selection = Selection.Selection(manager, keys, pygame.K_ASTERISK)
 	
+
+	commands = [Commands.Play(manager, pygame.K_b)]
+
+
+	# to know when exiting the soft
 	quitting = 0
 
 	while 1:
@@ -73,11 +66,15 @@ def run(playlist_file):
 	        		if quitting >= 5:
 	        			sys.exit()
 	        	elif event.key == pygame.K_SPACE:
-	        		label = myfont.render("Hello", 0, white)
-	        		track0.get_sound().play()
+	        		None
 	        	# select a track
 	        	elif selection.is_selection(event.key):
 	        		selection.treat_key(event.key)
+	        	# execute a command
+	        	else:
+	        		for cmd in commands:
+	        			if cmd.is_this_command(event.key):
+	        				cmd.execute()
 	
 	    ballrect = ballrect.move(speed)
 	    if ballrect.left < 0 or ballrect.right > width:
@@ -85,19 +82,10 @@ def run(playlist_file):
 	    if ballrect.top < 0 or ballrect.bottom > height:
 	        speed[1] = -speed[1]
 	
-	    screen.fill(black)
-	    pygame.draw.rect(screen, darkBlue, (10,20,100,50), 0)
+	    screen.fill(Color.black)
 	    screen.blit(ball, ballrect)
-	    #drawHouse(300,300,100,100,screen, pink)
 	    manager.draw(screen)
-	    screen.blit(label, (100, 100))
 	    pygame.display.flip()
 	    pygame.time.delay(50)
 	
 	
-	
-	def drawHouse(x, y, width, height, screen, color):
-		points = [(x,y- ((2/3.0) * height)), (x,y), (x+width,y), (x+width,y-(2/3.0) * height), 
-		    		        (x,y- ((2/3.0) * height)), (x + width/2.0,y-height), (x+width,y-(2/3.0)*height)]
-		lineThickness = 2
-		pygame.draw.lines(screen, color, False, points, lineThickness)

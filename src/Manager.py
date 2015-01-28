@@ -29,7 +29,17 @@ class Manager:
 		if noneSelected:
 			for t in self.tracks:
 				t.set_selected(True)
+
+	def get_selected_tracks(self):
+		sel_tracks = []
+		for t in self.tracks:
+			if t.get_selected():
+				sel_tracks.append(t)
+		return sel_tracks
 		
+	def unselect_all(self):
+		for t in self.tracks:
+			t.set_selected(False)
 
 	def draw(self, surface):
 		dest_rect = pygame.Rect(10, 10, Track.WIDTH, Track.HEIGHT)
