@@ -2,10 +2,6 @@
 
 class Selection:
 
-	manager = None
-	keys = []
-	master = None
-
 	# keys: ordered keys to be associated to numeric value
 	# e.g. passing ['q','w','e'] will result in [q:0,w:1,e2]
 	# master: all_tracks

@@ -1,6 +1,4 @@
-
-import Sound, Track, Manager
-
+import Track, Manager
 
 def load_playlist(manager, playlist_filename):
 	print "Loading playlist '" + playlist_filename + "'"
@@ -8,9 +6,9 @@ def load_playlist(manager, playlist_filename):
 		content = f.readlines()
 		for l in content:
 			try:
-				sound = Sound.Sound(l.rstrip())
-				track = Track.Track(sound)
+				track = Track.Track(l.rstrip())
 				manager.add(track)				
-			except Error:
+			except RuntimeError:
 				print "Error when loading sound '" + l + "'"
 		f.close()
+

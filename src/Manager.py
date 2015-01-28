@@ -4,11 +4,9 @@ import DrawText
 
 class Manager:
 
-	tracks = []
-	track_surface = None
-
 	def __init__(self):
 		self.track_surface = pygame.Surface((Track.WIDTH, Track.HEIGHT))
+		self.tracks = []
 	
 	def add(self, track):
 		self.tracks.append(track)
@@ -16,14 +14,13 @@ class Manager:
 	# make a track as selected
 	def toggle_selection(self, index):
 		if index < len(self.tracks):
-			state = self.tracks[index].get_selected()
+			state = self.tracks[index].is_selected()
 			self.tracks[index].set_selected(not state)
-
 
 	def toggle_selection_all(self):
 		noneSelected = True
 		for t in self.tracks:
-			if t.get_selected():
+			if t.is_selected():
 				noneSelected = False
 				t.set_selected(False)
 		if noneSelected:
@@ -33,7 +30,7 @@ class Manager:
 	def get_selected_tracks(self):
 		sel_tracks = []
 		for t in self.tracks:
-			if t.get_selected():
+			if t.is_selected():
 				sel_tracks.append(t)
 		return sel_tracks
 		
@@ -47,7 +44,7 @@ class Manager:
 		for t in self.tracks:
 			t.draw(self.track_surface, num)
 			surface.blit(self.track_surface, dest_rect)
-			dest_rect.move_ip(0, Track.HEIGHT)
+			dest_rect.move_ip(0, Track.HEIGHT + 10)
 			num=num+1
 			
 

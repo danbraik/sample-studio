@@ -1,6 +1,6 @@
 import sys, pygame
-import Sound, Track, Manager, Selection, Loader, Color
-import Commands
+import Track, Manager, Selection, Loader, Color
+import Commands, DrawText, Channels
 
 
 ressources_dir = "ressources/"
@@ -25,6 +25,9 @@ def run(playlist_file):
 	screen = pygame.display.set_mode(size, (pygame.FULLSCREEN | pygame.HWSURFACE if fullscreen else 0))
 	pygame.display.set_caption("Ardent'Scene studio")
 	pygame.mouse.set_visible(False)
+
+	# Init modules
+	DrawText.init()
 	
 	# Init entities
 	ball = pygame.image.load(ressources_dir + "ball.gif")
@@ -43,8 +46,10 @@ def run(playlist_file):
 			pygame.K_o, pygame.K_p]
 	selection = Selection.Selection(manager, keys, pygame.K_ASTERISK)
 	
-
-	commands = [Commands.Play(manager, pygame.K_b)]
+	commands = [Commands.Play(manager, pygame.K_b),
+			Commands.Stop(manager, pygame.K_n),
+			Commands.Fadein(manager, pygame.K_h),
+			Commands.Fadeout(manager, pygame.K_j)]
 
 
 	# to know when exiting the soft
