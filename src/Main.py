@@ -1,5 +1,5 @@
 import sys, pygame
-import Sound, Track, TrackManager
+import Sound, Track, Manager, Selection
 
 ressources_dir = "ressources/"
 
@@ -46,25 +46,41 @@ def run():
 	sound0 = Sound.Sound("sounds/thunder.ogg")
 
 	track0 = Track.Track(sound0)
-	track1 = Track.Track(sound0)
-	track2 = Track.Track(sound0)
 
-	trackManager = TrackManager.TrackManager()
-	trackManager.add(track0)
-	trackManager.add(track1)
-	trackManager.add(track2)
+	manager = Manager.Manager()
+	for i in range(0,5):
+		manager.add(Track.Track(sound0))
+
+	keys = [pygame.K_a, pygame.K_z, pygame.K_e,
+			pygame.K_r, pygame.K_t, 
+			pygame.K_y, pygame.K_u, pygame.K_i,
+			pygame.K_o, pygame.K_p]
+	selection = Selection.Selection(manager, keys, pygame.K_ASTERISK)
 	
+	quitting = 0
+
 	while 1:
 	    for event in pygame.event.get():
 	        if event.type == pygame.QUIT: 
 	        	pygame.quit()
 	        	sys.exit()
 	        if event.type == pygame.KEYDOWN:
+	        	quitting = quitting-1
 	        	if event.key == pygame.K_ESCAPE:
 	        		sys.exit()
+	        	elif event.key == pygame.K_BACKSPACE:
+	        		if quitting < 0:
+	        			quitting = 0
+	        		quitting = quitting + 2
+	        		if quitting >= 5:
+	        			sys.exit()
 	        	elif event.key == pygame.K_SPACE:
 	        		label = myfont.render("Hello", 0, white)
 	        		track0.get_sound().play()
+	        	# select a track
+	        	elif selection.is_selection(event.key):
+	        		print 'select track'
+	        		selection.treat_key(event.key)
 	
 	    ballrect = ballrect.move(speed)
 	    if ballrect.left < 0 or ballrect.right > width:
@@ -76,10 +92,10 @@ def run():
 	    pygame.draw.rect(screen, darkBlue, (10,20,100,50), 0)
 	    screen.blit(ball, ballrect)
 	    #drawHouse(300,300,100,100,screen, pink)
-	    trackManager.draw(screen)
+	    manager.draw(screen)
 	    screen.blit(label, (100, 100))
 	    pygame.display.flip()
-	    pygame.time.delay(500)
+	    pygame.time.delay(50)
 	
 	
 	
