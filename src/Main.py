@@ -7,6 +7,11 @@ import Commands, DrawText, Channel, CManager
 ressources_dir = "ressources/"
 
 
+def quit():
+	pygame.quit()
+	sys.exit()
+
+
 def run(playlist_file):
 	# Init pygame
 	pygame.mixer.pre_init(44100, -16, 2, 2048) # setup mixer to avoid sound lag
@@ -23,7 +28,7 @@ def run(playlist_file):
 	fullscreen = False
 	size = width, height = 1366/ (1 if fullscreen else 2),768/ (1 if fullscreen else 2)
 	
-	screen = pygame.display.set_mode(size, (pygame.FULLSCREEN | pygame.HWSURFACE if fullscreen else 0))
+	screen = pygame.display.set_mode(size, (pygame.FULLSCREEN | pygame.HWSURFACE if fullscreen else pygame.RESIZABLE))
 	pygame.display.set_caption("Ardent'Scene studio")
 	pygame.mouse.set_visible(False)
 
@@ -48,12 +53,14 @@ def run(playlist_file):
 			pygame.K_o, pygame.K_p]
 	selection = Selection.Selection(tmanager, keys, pygame.K_ASTERISK)
 	
-	commands = [Commands.Play(tmanager, cmanager, pygame.K_b)]
-#			,
-#			Commands.Stop(tmanager, cmanager, pygame.K_n),
-#			Commands.Fadein(tmanager, cmanager, pygame.K_h),
-#			Commands.Fadeout(tmanager, cmanager, pygame.K_j)]
-
+	commands = [
+			Commands.Play(tmanager, cmanager, pygame.K_b),
+			Commands.Stop(tmanager, cmanager, pygame.K_n),
+			Commands.Fadein(tmanager, cmanager, pygame.K_h),
+			Commands.Fadeout(tmanager, cmanager, pygame.K_j),
+			Commands.UpTracks(tmanager, cmanager, pygame.K_UP),
+			Commands.DownTracks(tmanager, cmanager, pygame.K_DOWN)
+			]
 
 	# to know when exiting the soft
 	quitting = 0
@@ -61,18 +68,18 @@ def run(playlist_file):
 	while 1:
 	    for event in pygame.event.get():
 	        if event.type == pygame.QUIT: 
-	        	pygame.quit()
-	        	sys.exit()
+	        	quit()
+	        # ---
 	        elif event.type == pygame.KEYDOWN:
 	        	quitting = quitting-1
 	        	if event.key == pygame.K_ESCAPE:
-	        		sys.exit()
+	        		quit()
 	        	elif event.key == pygame.K_BACKSPACE:
 	        		if quitting < 0:
 	        			quitting = 0
 	        		quitting = quitting + 2
 	        		if quitting >= 5:
-	        			sys.exit()
+	        			quit()
 	        	elif event.key == pygame.K_SPACE:
 	        		None
 	        	# select a track
@@ -83,8 +90,9 @@ def run(playlist_file):
 	        		for cmd in commands:
 	        			if cmd.is_this_command(event.key):
 	        				cmd.execute()
+	        # ---
 	        elif event.type == pygame.locals.USEREVENT:
-	        	print 'Has finished'
+	        	print 'Event : Sound has finished'
 	        	# Channel event
 	        	cmanager.has_finished()
 	

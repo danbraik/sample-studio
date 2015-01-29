@@ -7,6 +7,7 @@ class Manager:
 	def __init__(self):
 		self.track_surface = pygame.Surface((Track.WIDTH, Track.HEIGHT))
 		self.tracks = []
+		self.offset = 0
 	
 	def add(self, track):
 		self.tracks.append(track)
@@ -39,7 +40,7 @@ class Manager:
 			t.set_selected(False)
 
 	def draw(self, surface):
-		dest_rect = pygame.Rect(10, 10, Track.WIDTH, Track.HEIGHT)
+		dest_rect = pygame.Rect(10, 10 - Track.HEIGHT*self.offset, Track.WIDTH, Track.HEIGHT)
 		num=0
 		for t in self.tracks:
 			t.draw(self.track_surface, num)

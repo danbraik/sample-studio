@@ -16,12 +16,15 @@ class Channel:
 	def get_track(self):
 		return self._track
 
-	def play(self):
-		self._pychan.play(self._track.get_sound())
+	def play(self, _fade_ms=0):
+		self._pychan.play(self._track.get_sound(), fade_ms=_fade_ms)
 		self._track.add_playing()
 
-	def stop(self):
-		self._pychan.stop()
+	def stop(self, _fade_ms=0):
+		if _fade_ms == 0:
+			self._pychan.stop()
+		else:
+			self._pychan.fadeout(_fade_ms)
 		self._reset()
 
 	def is_busy(self):

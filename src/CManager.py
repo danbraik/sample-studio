@@ -11,9 +11,19 @@ class CManager:
 		for i in range(0, pygame.mixer.get_num_channels()):
 			self._free_channels.append(Channel.Channel(i))
 
-	def play_track(self, track):
+	def play_track(self, track, fade_ms=0):
 		chan = self._alloc_a_free_channel(track)
-		chan.play()
+		chan.play(fade_ms)
+
+	def stop_track(self, track, fade_ms=0):
+		stopped_chans = []
+		for c in self._alloc_channels:
+			if c.get_track() == track:
+				stopped_chans.append(c)
+		for c in stopped_chans:
+			self._alloc_channels.remove(c)
+			c.stop(fade_ms)
+			self._free_channels.append(c)
 
 	def _alloc_a_free_channel(self, track):
 		if len(self._free_channels) == 0:

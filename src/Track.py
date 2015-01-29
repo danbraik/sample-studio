@@ -50,6 +50,6 @@ class Track:
 		DrawText.draw(surface, self.get_name(), 25, 25)
 		# status
 		stat_col = Color.yellow if self.is_playing() else Color.bg_track
-		pygame.draw.rect(surface, stat_col, (200, 0,WIDTH-200,HEIGHT), 0)
+		pygame.draw.rect(surface, stat_col, (500, 0,WIDTH-500,HEIGHT), 0)
 
 
