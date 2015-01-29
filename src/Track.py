@@ -12,7 +12,7 @@ class Track:
 		self._sound = pygame.mixer.Sound(soundpath)
 		self._name = soundpath.split("/")[-1]
 		self._is_selected = False
-		self._is_playing = False
+		self._nb_playing = 0
 
 	def get_name(self):
 		return self._name
@@ -28,11 +28,16 @@ class Track:
 		return self._is_selected
 
 	
-	def set_playing(self, val):
-		self._is_playing = val
+	def add_playing(self):
+		self._nb_playing += 1
+
+	def sub_playing(self):
+		if self._nb_playing == 0:
+			raise Error("Track - sub_playing")
+		self._nb_playing -= 1
 
 	def is_playing(self):
-		return self._is_playing
+		return self._nb_playing > 0
 
 	
 	def draw(self, surface, num=0):

@@ -1,4 +1,5 @@
 import sys, pygame
+import pygame.locals
 import Track, TManager, Selection, Loader, Color
 import Commands, DrawText, Channel, CManager
 
@@ -62,7 +63,7 @@ def run(playlist_file):
 	        if event.type == pygame.QUIT: 
 	        	pygame.quit()
 	        	sys.exit()
-	        if event.type == pygame.KEYDOWN:
+	        elif event.type == pygame.KEYDOWN:
 	        	quitting = quitting-1
 	        	if event.key == pygame.K_ESCAPE:
 	        		sys.exit()
@@ -82,6 +83,10 @@ def run(playlist_file):
 	        		for cmd in commands:
 	        			if cmd.is_this_command(event.key):
 	        				cmd.execute()
+	        elif event.type == pygame.locals.USEREVENT:
+	        	print 'Has finished'
+	        	# Channel event
+	        	cmanager.has_finished()
 	
 	    ballrect = ballrect.move(speed)
 	    if ballrect.left < 0 or ballrect.right > width:

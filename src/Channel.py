@@ -18,7 +18,18 @@ class Channel:
 
 	def play(self):
 		self._pychan.play(self._track.get_sound())
-		self._track.set_playing(True)
+		self._track.add_playing()
 
+	def stop(self):
+		self._pychan.stop()
+		self._reset()
+
+	def is_busy(self):
+		if self._pychan.get_busy():
+			return True
+		self._reset()
 	
+	def _reset(self):
+		self._track.sub_playing()
+		self._track = None
 

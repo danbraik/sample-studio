@@ -15,7 +15,6 @@ class CManager:
 		chan = self._alloc_a_free_channel(track)
 		chan.play()
 
-
 	def _alloc_a_free_channel(self, track):
 		if len(self._free_channels) == 0:
 			chan = self._alloc_channels.pop()
@@ -23,6 +22,15 @@ class CManager:
 			self._free_channels.append(chan)
 		chan = self._free_channels.pop()
 		chan.set_track(track)
-		self._alloc_channels.append(chan)
+		self._alloc_channels.insert(0, chan)
 		return chan
+
+	def has_finished(self):
+		finished_c = None
+		for c in self._alloc_channels:
+			if not c.is_busy():
+				finished_c = c
+		if finished_c != None:
+			self._alloc_channels.remove(finished_c)
+			self._free_channels.append(finished_c)
 
