@@ -1,8 +1,9 @@
 
 class AbstractCommand:
 
-	def __init__(self, manager, key):
-		self.manager = manager
+	def __init__(self, tmanager, cmanager, key):
+		self.tmanager = tmanager
+		self.cmanager = cmanager
 		self.key = key
 
 	def is_this_command(self, key):
@@ -14,15 +15,16 @@ class AbstractCommand:
 
 class Play (AbstractCommand):
 
-	def __init__(self, manager, key):
-		AbstractCommand.__init__(self, manager, key)
+	def __init__(self, tmanager, cmanager, key):
+		AbstractCommand.__init__(self, tmanager, cmanager, key)
 	
 	def _exec(self):
 		print 'Play'
-		for t in self.manager.get_selected_tracks():
+		for t in self.tmanager.get_selected_tracks():
 			print '   ' + t.get_name()
+			self.cmanager.play_track(t)
 			#t.play()
-		self.manager.unselect_all()
+		self.tmanager.unselect_all()
 
 
 class Fadein (AbstractCommand):

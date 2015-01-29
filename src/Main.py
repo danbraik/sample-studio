@@ -1,6 +1,6 @@
 import sys, pygame
-import Track, Manager, Selection, Loader, Color
-import Commands, DrawText, Channels
+import Track, TManager, Selection, Loader, Color
+import Commands, DrawText, Channel, CManager
 
 
 ressources_dir = "ressources/"
@@ -36,20 +36,22 @@ def run(playlist_file):
 
 
 	# ***
-	manager = Manager.Manager()
+	tmanager = TManager.Manager()
+	cmanager = CManager.CManager()
 
-	Loader.load_playlist(manager, playlist_file)
+	Loader.load_playlist(tmanager, playlist_file)
 
 	keys = [pygame.K_a, pygame.K_z, pygame.K_e,
 			pygame.K_r, pygame.K_t, 
 			pygame.K_y, pygame.K_u, pygame.K_i,
 			pygame.K_o, pygame.K_p]
-	selection = Selection.Selection(manager, keys, pygame.K_ASTERISK)
+	selection = Selection.Selection(tmanager, keys, pygame.K_ASTERISK)
 	
-	commands = [Commands.Play(manager, pygame.K_b),
-			Commands.Stop(manager, pygame.K_n),
-			Commands.Fadein(manager, pygame.K_h),
-			Commands.Fadeout(manager, pygame.K_j)]
+	commands = [Commands.Play(tmanager, cmanager, pygame.K_b)]
+#			,
+#			Commands.Stop(tmanager, cmanager, pygame.K_n),
+#			Commands.Fadein(tmanager, cmanager, pygame.K_h),
+#			Commands.Fadeout(tmanager, cmanager, pygame.K_j)]
 
 
 	# to know when exiting the soft
@@ -89,7 +91,7 @@ def run(playlist_file):
 	
 	    screen.fill(Color.black)
 	    screen.blit(ball, ballrect)
-	    manager.draw(screen)
+	    tmanager.draw(screen)
 	    pygame.display.flip()
 	    pygame.time.delay(50)
 	
