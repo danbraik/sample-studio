@@ -18,6 +18,6 @@ class Selection:
 		if key == self.master:
 			tmanager.toggle_selection_all()
 		else:
-			num = self.keys.index(key)
+			num = self.keys.index(key) + tmanager.get_offset()
 			tmanager.toggle_selection(num)
 		

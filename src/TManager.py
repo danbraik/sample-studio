@@ -43,6 +43,9 @@ class Manager:
 	    new_val = self.offset + val
 	    if 0 <= new_val and new_val < len(self.tracks):
 	        self.offset = new_val
+	
+	def get_offset(self):
+	    return self.offset
 
 	def draw(self, surface):
 		dest_rect = pygame.Rect(10, 50 - (10+Track.HEIGHT)*self.offset, Track.WIDTH, Track.HEIGHT)
