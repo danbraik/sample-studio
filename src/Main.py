@@ -12,7 +12,7 @@ def quit():
 	sys.exit()
 
 
-def run(playlist_file):
+def run(playlist_files):
 	# Init pygame
 	pygame.mixer.pre_init(44100, -16, 2, 2048) # setup mixer to avoid sound lag
 	print "Init pygame, version = ", pygame.version.ver
@@ -45,12 +45,11 @@ def run(playlist_file):
 
 
 	# ***
-	tmanagerz = TManager.Manager()
 	cmanager = CManager.CManager()
 
-	Loader.load_playlist(tmanagerz, playlist_file)
-
-	cur_tmanager = tmanagerz
+	tmanagers = Loader.load_playlists(playlist_files)
+	
+	cur_tmanager = tmanagers[0]
 
 	keys = [pygame.K_a, pygame.K_z, pygame.K_e,
 			pygame.K_r, pygame.K_t, 

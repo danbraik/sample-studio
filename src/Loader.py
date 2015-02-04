@@ -1,4 +1,4 @@
-import Track, Manager, os, pygame
+import Track, TManager, os, pygame
 
 _sounds = {}
 _images = {}
@@ -17,15 +17,17 @@ def _get_sound_and_image(soundpath, imagepath):
 		print "Reuse '" + imagepath + "'"
 		image = _images.get(imagepath)
 	else:
-		print "Load  '" + imagepath + "'"
 		if os.path.exists(imagepath):
+			print "Load  '" + imagepath + "'"
 			_images[imagepath] = pygame.image.load(imagepath)
+		else:
+			print "Skip  '" + imagepath + "'"
 		image = _images.get(imagepath)
 	
 	return sound, image
 
 
-def load_playlist(manager, playlist_filename):
+def _load_playlist(manager, playlist_filename):
 	print "Loading playlist '" + playlist_filename + "'"
 	with open(playlist_filename, "r") as f:
 		content = f.readlines()
@@ -41,4 +43,19 @@ def load_playlist(manager, playlist_filename):
 			except RuntimeError:
 				print "Error when loading sound '" + l + "'"
 		f.close()
+
+def load_playlists(playlist_filenames):
+	tmans = []
+
+	for playlist in playlist_filenames:
+		if not os.path.exists(playlist):
+			print('ERROR: Playlist "%s" was not found!' % sys.argv[1])
+		else:
+			tmanager = TManager.Manager()
+			_load_playlist(tmanager, playlist)
+			tmans.append(tmanager)
+	
+	print str(len(tmans)) + " playlists loaded."
+	return tmans
+
 

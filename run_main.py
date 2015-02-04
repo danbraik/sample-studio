@@ -3,10 +3,9 @@ from src import Main
 import sys, os
 
 if len(sys.argv) < 2:
-	sys.exit('Usage: %s playlist' % sys.argv[0])
+	sys.exit('Usage: %s playlist...' % sys.argv[0])
+# rm program name
+sys.argv.pop(0)
 
-if not os.path.exists(sys.argv[1]):
-	sys.exit('ERROR: Playlist "%s" was not found!' % sys.argv[1])
-
-Main.run(sys.argv[1])
+Main.run(sys.argv)
 
