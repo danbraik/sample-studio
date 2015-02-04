@@ -26,11 +26,14 @@ def run(playlist_file):
 	
 	# Init Screen
 	fullscreen = False
-	size = width, height = 1366/ (1 if fullscreen else 2),768/ (1 if fullscreen else 2)
+	if fullscreen:
+		size = width, height = 1366,768
+	else:
+		size = width, height = 1366/2,760
 	
 	screen = pygame.display.set_mode(size, (pygame.FULLSCREEN | pygame.HWSURFACE if fullscreen else pygame.RESIZABLE))
 	pygame.display.set_caption("Ardent'Scene studio")
-	pygame.mouse.set_visible(False)
+	#pygame.mouse.set_visible(False)
 
 	# Init modules
 	DrawText.init()
@@ -58,8 +61,8 @@ def run(playlist_file):
 			Commands.Stop(tmanager, cmanager, pygame.K_n),
 			Commands.Fadein(tmanager, cmanager, pygame.K_h),
 			Commands.Fadeout(tmanager, cmanager, pygame.K_j),
-			Commands.UpTracks(tmanager, cmanager, pygame.K_UP),
-			Commands.DownTracks(tmanager, cmanager, pygame.K_DOWN)
+			Commands.UpTracks(tmanager, cmanager, pygame.K_DOWN),
+			Commands.DownTracks(tmanager, cmanager, pygame.K_UP)
 			]
 
 	# to know when exiting the soft
