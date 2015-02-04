@@ -60,17 +60,17 @@ def run(playlist_files):
     cur_tmanager = tmanagers[0]
 
     # ---
-    keys = [pygame.K_a, pygame.K_z, pygame.K_e,
-            pygame.K_r, pygame.K_t, 
-            pygame.K_y, pygame.K_u, pygame.K_i,
-            pygame.K_o, pygame.K_p]
+    keys = [pygame.K_a, pygame.K_z, pygame.K_e, 
+            pygame.K_r, pygame.K_t, pygame.K_y, 
+            pygame.K_u, pygame.K_i, pygame.K_o,
+            pygame.K_p ]
     selection = Selection.Selection(keys, pygame.K_ASTERISK)
     
     # ---
     commands = [
-            Commands.Play(cmanager, pygame.K_b),
+            Commands.Play(cmanager, pygame.K_v),
             Commands.Stop(cmanager, pygame.K_n),
-            Commands.Fadein(cmanager, pygame.K_h),
+            Commands.Fadein(cmanager, pygame.K_g),
             Commands.Fadeout(cmanager, pygame.K_j),
             Commands.UpTracks(cmanager, pygame.K_DOWN),
             Commands.DownTracks(cmanager, pygame.K_UP)
