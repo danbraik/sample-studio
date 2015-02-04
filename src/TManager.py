@@ -39,8 +39,13 @@ class Manager:
 		for t in self.tracks:
 			t.set_selected(False)
 
+	def add_offset(self, val):
+	    new_val = self.offset + val
+	    if 0 <= new_val and new_val < len(self.tracks):
+	        self.offset = new_val
+
 	def draw(self, surface):
-		dest_rect = pygame.Rect(10, 10 - Track.HEIGHT*self.offset, Track.WIDTH, Track.HEIGHT)
+		dest_rect = pygame.Rect(10, 10 - (10+Track.HEIGHT)*self.offset, Track.WIDTH, Track.HEIGHT)
 		num=0
 		for t in self.tracks:
 			t.draw(self.track_surface, num)
