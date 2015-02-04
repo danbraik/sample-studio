@@ -1,64 +1,64 @@
 
 class AbstractCommand:
-	def __init__(self, tmanager, cmanager, key):
-		self.tmanager = tmanager
+	def __init__(self, cmanager, key):
 		self.cmanager = cmanager
 		self.key = key
 	def is_this_command(self, key):
 		return key == self.key
-	def execute(self):
-		self._exec()
+	def execute(self, tmanager):
+		self._exec(tmanager)
 
 class Play (AbstractCommand):
-	def __init__(self, tmanager, cmanager, key):
-		AbstractCommand.__init__(self, tmanager, cmanager, key)
-	def _exec(self):
+	def __init__(self, cmanager, key):
+		AbstractCommand.__init__(self, cmanager, key)
+	def _exec(self, tmanager):
 		print 'Play'
-		for t in self.tmanager.get_selected_tracks():
+		for t in tmanager.get_selected_tracks():
 			print '   ' + t.get_name()
 			self.cmanager.play_track(t)
-		self.tmanager.unselect_all()
+		tmanager.unselect_all()
 
 class Fadein (AbstractCommand):
-	def __init__(self, tmanager, cmanager, key):
-		AbstractCommand.__init__(self, tmanager, cmanager, key)
-	def _exec(self):
+	def __init__(self, cmanager, key):
+		AbstractCommand.__init__(self, cmanager, key)
+	def _exec(self, tmanager):
 		print 'Fadein'
-		for t in self.tmanager.get_selected_tracks():
+		for t in tmanager.get_selected_tracks():
 			print '   ' + t.get_name()
 			self.cmanager.play_track(t, 2000)
-		self.tmanager.unselect_all()
+		tmanager.unselect_all()
 
 class Stop (AbstractCommand):
-	def __init__(self, tmanager, cmanager, key):
-		AbstractCommand.__init__(self, tmanager, cmanager, key)
-	def _exec(self):
+	def __init__(self, cmanager, key):
+		AbstractCommand.__init__(self, cmanager, key)
+	def _exec(self, tmanager):
 		print 'Stop'
-		for t in self.tmanager.get_selected_tracks():
+		for t in tmanager.get_selected_tracks():
 			print '   ' + t.get_name()
 			self.cmanager.stop_track(t)
-		self.tmanager.unselect_all()
+		tmanager.unselect_all()
 
 class Fadeout (AbstractCommand):
-	def __init__(self, tmanager, cmanager, key):
-		AbstractCommand.__init__(self, tmanager, cmanager, key)
-	def _exec(self):
+	def __init__(self, cmanager, key):
+		AbstractCommand.__init__(self, cmanager, key)
+	def _exec(self, tmanager):
 		print 'Fadeout'
-		for t in self.tmanager.get_selected_tracks():
+		for t in tmanager.get_selected_tracks():
 			print '   ' + t.get_name()
 			self.cmanager.stop_track(t, 2000)
-		self.tmanager.unselect_all()
+		tmanager.unselect_all()
 
 class UpTracks (AbstractCommand):
-	def __init__(self, tmanager, cmanager, key):
-		AbstractCommand.__init__(self, tmanager, cmanager, key)
-	def _exec(self):
+	def __init__(self, cmanager, key):
+		AbstractCommand.__init__(self, cmanager, key)
+	def _exec(self, tmanager):
 		print 'Up'
-		self.tmanager.offset += 1
+		tmanager.offset += 1
 
 class DownTracks (AbstractCommand):
-	def __init__(self, tmanager, cmanager, key):
-		AbstractCommand.__init__(self, tmanager, cmanager, key)
-	def _exec(self):
+	def __init__(self, cmanager, key):
+		AbstractCommand.__init__(self, cmanager, key)
+	def _exec(self, tmanager):
 		print 'Up'
-		self.tmanager.offset -= 1
+		tmanager.offset -= 1
+

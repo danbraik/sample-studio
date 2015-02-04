@@ -5,8 +5,7 @@ class Selection:
 	# keys: ordered keys to be associated to numeric value
 	# e.g. passing ['q','w','e'] will result in [q:0,w:1,e2]
 	# master: all_tracks
-	def __init__(self, manager, keys, master):
-		self.manager = manager
+	def __init__(self, keys, master):
 		self.keys = keys
 		self.master = master
 
@@ -15,10 +14,10 @@ class Selection:
 		return (key in self.keys) or (key == self.master)
 
 	# call this only if 'is_selection' is true
-	def treat_key(self, key):
+	def treat_key(self, key, tmanager):
 		if key == self.master:
-			self.manager.toggle_selection_all()
+			tmanager.toggle_selection_all()
 		else:
 			num = self.keys.index(key)
-			self.manager.toggle_selection(num)
+			tmanager.toggle_selection(num)
 		

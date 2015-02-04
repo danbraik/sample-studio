@@ -8,15 +8,13 @@ HEIGHT = 143
 
 class Track:
 
-	def __init__(self, soundpath):
-		self._sound = pygame.mixer.Sound(soundpath)
-		self._name = soundpath.split("/")[-1]
+	def __init__(self, sound, soundname, image):
+		self._sound = sound
+		self._name = soundname 
 		self._is_selected = False
 		self._nb_playing = 0
-		self._img = None
-	
-	def set_imagepath(self, path):
-		self._img = pygame.image.load(path)
+		self._img = image
+
 
 	def get_name(self):
 		return self._name
