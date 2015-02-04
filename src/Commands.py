@@ -53,12 +53,12 @@ class UpTracks (AbstractCommand):
 		AbstractCommand.__init__(self, cmanager, key)
 	def _exec(self, tmanager):
 		print 'Up'
-		tmanager.add_offset(-1)
+		tmanager.add_offset(1)
 
 class DownTracks (AbstractCommand):
 	def __init__(self, cmanager, key):
 		AbstractCommand.__init__(self, cmanager, key)
 	def _exec(self, tmanager):
 		print 'Up'
-		tmanager.add_offset(1)
+		tmanager.add_offset(-1)
 

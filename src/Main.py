@@ -12,6 +12,12 @@ def quit():
     sys.exit()
 
 
+def draw_playlist_index(surface, index):
+    width = surface.get_width()
+    pygame.draw.rect(surface, Color.gray, (0,0, width, 40), 0)
+    pygame.draw.rect(surface, Color.yellow, (0,0, width, 40), 1)
+    DrawText.draw(surface, str(index), width/2, 15)
+
 def run(playlist_files):
     # Init pygame
     pygame.mixer.pre_init(44100, -16, 2, 2048) # setup mixer to avoid sound lag
@@ -124,6 +130,7 @@ def run(playlist_files):
         screen.fill(Color.black)
         screen.blit(ball, ballrect)
         cur_tmanager.draw(screen)
+        draw_playlist_index(screen, tman_i)
         pygame.display.flip()
         pygame.time.delay(50)
     
