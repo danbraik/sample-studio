@@ -68,8 +68,9 @@ class Track:
 			w_r = 2
 			pygame.draw.rect(surface, Color.yellow, (w_num, 0, WIDTH-w_num-1, HEIGHT-1), w_r)
 			
-			time = pygame.time.get_ticks();
-			x_pos = ((time - self._time) / length * (WIDTH-w_num)) / 1000.0 + w_num
-			pygame.draw.line(surface, Color.orange, (x_pos, 0), (x_pos, HEIGHT), 2);
+			if self._img:
+			    time = pygame.time.get_ticks();
+			    x_pos = ((time - self._time) / length * (self._img.get_width())) / 1000.0 + w_num
+			    pygame.draw.line(surface, Color.orange, (x_pos, 0), (x_pos, HEIGHT), 2);
 
 
