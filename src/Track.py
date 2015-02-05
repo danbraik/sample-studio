@@ -56,10 +56,17 @@ class Track:
 		# title
 		# pygame.draw.rect(surface, Color.darkBlue, (20,0,WIDTH-20,HEIGHT), 0)
 		DrawText.draw(surface, self.get_name(), x_title, 5)
+
+		# length
+		length = int(self._sound.get_length())
+		DrawText.draw(surface, str(length), WIDTH - 60, 5)
+
 		# status
 		if self.is_playing():
 			w_r = 2
 			pygame.draw.rect(surface, Color.yellow, (w_num, 0, WIDTH-w_num-1, HEIGHT-1), w_r)
+
+
 
 
 

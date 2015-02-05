@@ -9,8 +9,11 @@ def _get_sound_and_image(soundpath, imagepath):
         print "Reuse '" + soundpath + "'"
         sound = _sounds.get(soundpath)
     else:
-        print "Load  '" + soundpath + "'"
-        _sounds[soundpath] = pygame.mixer.Sound(soundpath)
+        if os.path.exists(soundpath):
+            print "Load  '" + soundpath + "'"
+            _sounds[soundpath] = pygame.mixer.Sound(soundpath)
+        else:
+            print "Skip  '" + soundpath + "'"
         sound = _sounds.get(soundpath)
     # image
     if _images.has_key(imagepath):
@@ -38,9 +41,10 @@ def _load_playlist(manager, playlist_filename):
                     imagepath = soundpath + ".bmp"
 
                     sound, image = _get_sound_and_image(soundpath, imagepath)
-                    track = Track.Track(sound, soundpath.split("/")[-1], image)
+                    if sound != None:
+                        track = Track.Track(sound, soundpath.split("/")[-1], image)
 
-                    manager.add(track)              
+                        manager.add(track)              
                 except RuntimeError:
                     print "Error when loading sound '" + l + "'"
         f.close()
