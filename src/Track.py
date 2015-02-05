@@ -14,6 +14,7 @@ class Track:
 		self._is_selected = False
 		self._nb_playing = 0
 		self._img = image
+		self._time = 0
 
 
 	def get_name(self):
@@ -32,6 +33,7 @@ class Track:
 	
 	def add_playing(self):
 		self._nb_playing += 1
+		self._time = pygame.time.get_ticks();
 
 	def sub_playing(self):
 		if self._nb_playing == 0:
@@ -65,8 +67,9 @@ class Track:
 		if self.is_playing():
 			w_r = 2
 			pygame.draw.rect(surface, Color.yellow, (w_num, 0, WIDTH-w_num-1, HEIGHT-1), w_r)
-
-
-
+			
+			time = pygame.time.get_ticks();
+			x_pos = ((time - self._time) / length * (WIDTH-w_num)) / 1000.0 + w_num
+			pygame.draw.line(surface, Color.orange, (x_pos, 0), (x_pos, HEIGHT), 2);
 
 
