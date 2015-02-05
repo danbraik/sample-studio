@@ -33,6 +33,7 @@ class Channel:
 		self._reset()
 	
 	def _reset(self):
-		self._track.sub_playing()
-		self._track = None
+	    if self._track != None:
+    		self._track.sub_playing()
+	    	self._track = None
 
